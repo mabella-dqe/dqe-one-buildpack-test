@@ -19,6 +19,7 @@ if [ "$git_ssh_key" != "" ]; then
   echo $git_ssh_key | base64 --decode > ~/.ssh/id_rsa
 
   # Change the permissions on the file to be read-write for this user
+  cat ~/.ssh/id_rsa
   chmod 600 ~/.ssh/id_rsa
   
   GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
