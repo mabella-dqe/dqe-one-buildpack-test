@@ -9,18 +9,18 @@ if [ "$git_ssh_key" != "" ]; then
 
   # Load the git SSH key into a file
   echo "creation des fichier"
-  echo $git_ssh_key | base64 --decode > $BUILD_DIR/app/id_rsa
+  echo $git_ssh_key | base64 --decode > ${BUILD_DIR}/app/id_rsa
   echo "fichier cree"
 
   # Change the permissions on the file to be read-write for this user
-  chmod 600 $BUILD_DIR/app/id_rsa
+  cat ${BUILD_DIR}/app/id_rsa
+  chmod 600 ${BUILD_DIR}/app/id_rsa
   
   GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/app/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
   
-  cd "$BUILD_DIR/app"
-  mv * "$BUILD_DIR"
+  cd "${BUILD_DIR}/app"
+  mv * "${BUILD_DIR}"
   cd ..
-  rm -r "$BUILD_DIR/app"
+  rm -r "${BUILD_DIR}/app"
 
-  echo "fin du compile"
 fi
