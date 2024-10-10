@@ -14,7 +14,6 @@ if [ "$git_ssh_key" != "" ]; then
   echo "fichier cree"
 
   # Change the permissions on the file to be read-write for this user
-  cat ${BUILD_DIR}/id_rsa
   chmod 600 ${BUILD_DIR}/id_rsa
   
   GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
