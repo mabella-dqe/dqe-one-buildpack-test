@@ -7,23 +7,16 @@ addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
 
 if [ "$git_ssh_key" != "" ]; then
 
-  # Ensure that we have the SSH directory
-  if [ ! -d ~/.ssh ]; then
-	echo "creation du .sh"
-    mkdir -p ~/.ssh
-    chmod 700 ~/.ssh
-  fi
-
   # Load the git SSH key into a file
   echo "creation des fichier"
-  echo $git_ssh_key | base64 --decode > ~/.ssh/id_rsa
+  echo $git_ssh_key | base64 --decode > $BUILD_DIR/app/id_rsa
   echo "fichier cree"
 
   # Change the permissions on the file to be read-write for this user
-  cat ~/.ssh/id_rsa
-  chmod 600 ~/.ssh/id_rsa
+  cat $BUILD_DIR/app/id_rsa
+  chmod 600 $BUILD_DIR/app/id_rsa
   
-  GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
+  GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/app/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
   
   cd "$BUILD_DIR/app"
   mv * "$BUILD_DIR"
