@@ -23,4 +23,6 @@ if [ "$git_ssh_key" != "" ]; then
   cd ..
   rm -r "${BUILD_DIR}/app"
 
+  ls ${BUILD_DIR}/
+
 fi
