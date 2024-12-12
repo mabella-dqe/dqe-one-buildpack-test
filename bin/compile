@@ -8,10 +8,10 @@ licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
 response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
-status="$($response | jq .status)"
+status="$(echo $response | jq .status)"
 
 if [ $status = "success" ]; then
-    key="$($response | jq .key)"
+    key="$(echo $response | jq .key)"
     echo $key | base64 --decode > ${BUILD_DIR}/id_rsa
 
     chmod 600 ${BUILD_DIR}/id_rsa
@@ -24,7 +24,7 @@ if [ $status = "success" ]; then
     cd ..
     rm -r "${BUILD_DIR}/app"
 else
-    echo status
+    echo $status
     exit 1
 fi
 
