@@ -1,26 +1,9 @@
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
-git_ssh_key="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_KEY)"
-git_clone="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_URL | base64 --decode)"
-addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
 
-if [ "$git_ssh_key" != "" ]; then
+url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL)"
+uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID)"
+licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
-  # Load the git SSH key into a file
-  echo "creation des fichier"
-  echo ${git_ssh_key} | base64 --decode > ${BUILD_DIR}/id_rsa
-  echo "fichier cree"
-
-  # Change the permissions on the file to be read-write for this user
-  chmod 600 ${BUILD_DIR}/id_rsa
-  
-  GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
-
-  rm "${BUILD_DIR}/id_rsa"
-  cd "${BUILD_DIR}/app"
-  mv * "${BUILD_DIR}"
-  cd ..
-  rm -r "${BUILD_DIR}/app"
-
-fi
+curl "${url_to_call}/?licence=${licence}&uuid=${uuid}" | echo
