@@ -8,7 +8,8 @@ licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
 response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
-status="$(echo $response | jq .status)"
+
+status=$(echo ${response} | jq .status)
 
 echo "status ${status}"
 
