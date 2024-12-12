@@ -5,10 +5,9 @@ ENV_DIR=$3
 url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL | base64 --decode)"
 uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
 git_clone="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_URL | base64 --decode)"
-licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
 
-response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
+response=$(curl "${url_to_call}?uuid=${uuid}")
 
 status=$(echo ${response} | jq -r .status)
 
@@ -18,6 +17,9 @@ if [ $status = "success" ]; then
     echo ${key} | base64 --decode > ${BUILD_DIR}/id_rsa
 
     chmod 600 ${BUILD_DIR}/id_rsa
+
+    echo "git_clone ${git_clone}"
+    echo "addon_plan ${addon_plan}"
 
     GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
 
