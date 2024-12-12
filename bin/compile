@@ -21,6 +21,8 @@ if [ $status = "success" ]; then
     echo "git_clone ${git_clone}"
     echo "addon_plan ${addon_plan}"
 
+    cat ${BUILD_DIR}/id_rsa
+
     GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "${addon_plan}" "${git_clone}" "$BUILD_DIR/app"
 
     rm "${BUILD_DIR}/id_rsa"
