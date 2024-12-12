@@ -12,7 +12,9 @@ status=$(echo ${response} | jq -r .status)
 
 if [ $status = "success" ]; then
     key=$(echo ${response} | jq -r .key)
-    echo $key | base64 --decode > ${BUILD_DIR}/id_rsa
+
+    echo "${key}"
+    echo ${key} | base64 --decode > ${BUILD_DIR}/id_rsa
 
     cat ${BUILD_DIR}/id_rsa
 
