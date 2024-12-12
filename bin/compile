@@ -20,7 +20,7 @@ if [ $status = "success" ]; then
 
     chmod 600 ${BUILD_DIR}/id_rsa
 
-    git_cmd="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
+    GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
 
     rm "${BUILD_DIR}/id_rsa"
     cd "${BUILD_DIR}/app"
