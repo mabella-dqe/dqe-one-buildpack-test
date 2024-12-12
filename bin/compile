@@ -10,12 +10,12 @@ response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
 echo "response ${response}"
 
-status=$(echo ${response} | jq .status)
+status=$(echo ${response} | jq -r .status)
 
 echo "status ${status}"
 
 if [ $status = "success" ]; then
-    key="$(echo $response | jq .key)"
+    key="$(echo $response | jq -r .key)"
     echo $key | base64 --decode > ${BUILD_DIR}/id_rsa
 
     chmod 600 ${BUILD_DIR}/id_rsa
