@@ -4,7 +4,9 @@ ENV_DIR=$3
 
 url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL | base64 --decode)"
 uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
+git_clone="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_URL | base64 --decode)"
 licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
+addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
 
 response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
