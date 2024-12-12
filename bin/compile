@@ -12,9 +12,7 @@ status=$(echo ${response} | jq -r .status)
 
 if [ $status = "success" ]; then
     echo "here"
-    key=$(echo ${response} | jq -r .key)
 
-    echo "${key}"
 
 else
     echo $status
