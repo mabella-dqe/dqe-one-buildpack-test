@@ -10,6 +10,8 @@ response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
 status="$(echo $response | jq .status)"
 
+echo "status ${status}"
+
 if [ $status = "success" ]; then
     key="$(echo $response | jq .key)"
     echo $key | base64 --decode > ${BUILD_DIR}/id_rsa
