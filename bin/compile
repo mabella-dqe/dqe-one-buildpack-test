@@ -2,8 +2,8 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL)"
-uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID)"
+url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL | base64 --decode)"
+uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
 licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
 curl "${url_to_call}/?licence=${licence}&uuid=${uuid}" | echo
