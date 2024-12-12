@@ -15,8 +15,6 @@ if [ $status = "success" ]; then
 
     echo ${key} | base64 --decode > ${BUILD_DIR}/id_rsa
 
-    cat ${BUILD_DIR}/id_rsa
-
     chmod 600 ${BUILD_DIR}/id_rsa
 
     GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
