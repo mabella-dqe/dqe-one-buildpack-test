@@ -11,22 +11,11 @@ response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 status=$(echo ${response} | jq -r .status)
 
 if [ $status = "success" ]; then
+    echo "here"
     key=$(echo ${response} | jq -r .key)
 
     echo "${key}"
-    echo ${key} | base64 --decode > ${BUILD_DIR}/id_rsa
 
-    cat ${BUILD_DIR}/id_rsa
-
-    chmod 600 ${BUILD_DIR}/id_rsa
-
-    GIT_SSH_COMMAND="ssh -i ${BUILD_DIR}/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone -b "$addon_plan" "$git_clone" "$BUILD_DIR/app"
-
-    rm "${BUILD_DIR}/id_rsa"
-    cd "${BUILD_DIR}/app"
-    mv * "${BUILD_DIR}"
-    cd ..
-    rm -r "${BUILD_DIR}/app"
 else
     echo $status
     exit 1
