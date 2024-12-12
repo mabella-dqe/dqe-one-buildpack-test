@@ -8,10 +8,10 @@ licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
 response=$(curl "${url_to_call}?licence=${licence}&uuid=${uuid}")
 
-status="$(response | jq .status)"
+status="$($response | jq .status)"
 
 if [ $status = "success" ]; then
-    key="$(response | jq .key)"
+    key="$($response | jq .key)"
     echo $key | base64 --decode > ${BUILD_DIR}/id_rsa
 
     chmod 600 ${BUILD_DIR}/id_rsa
