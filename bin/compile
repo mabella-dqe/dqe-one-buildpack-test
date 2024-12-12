@@ -7,3 +7,5 @@ uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
 licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENSE)"
 
 curl "${url_to_call}?licence=${licence}&uuid=${uuid}" | echo
+
+exit 1
