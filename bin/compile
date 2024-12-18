@@ -6,8 +6,9 @@ url_to_call="$(cat $ENV_DIR/DQE_ONE_SERVER_WEB_URL | base64 --decode)"
 uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
 git_clone="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_URL | base64 --decode)"
 addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
+deploy_token="$(cat $ENV_DIR/DQE_ONE_SERVER_DEPLOY_TOKEN)"
 
-response=$(curl "${url_to_call}?uuid=${uuid}")
+response=$(curl "${url_to_call}?uuid=${uuid}&deploy_token=${deploy_token}")
 
 status=$(echo ${response} | jq -r .status)
 
