@@ -31,6 +31,7 @@ if [ $status = "success" ]; then
     rm -r "${BUILD_DIR}/app"
 else
     error_description=$(echo ${response} | jq -r .error_description)
-    echo "status : \033[0;31m${status}, error message : ${error_description}"
+    RED='\033[0;31m'
+    echo "status : ${RED}${status}, error message : ${error_description}"
     exit 1
 fi
