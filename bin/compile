@@ -7,8 +7,9 @@ uuid="$(cat $ENV_DIR/DQE_ONE_SERVER_UUID | base64 --decode)"
 git_clone="$(cat $ENV_DIR/DQE_ONE_SERVER_GIT_SSH_URL | base64 --decode)"
 addon_plan="$(cat $ENV_DIR/DQE_ONE_SERVER_ADDON_PLAN)"
 deploy_token="$(cat $ENV_DIR/DQE_ONE_SERVER_DEPLOY_TOKEN)"
+licence="$(cat $ENV_DIR/DQE_ONE_SERVER_LICENCE)"
 
-response=$(curl "${url_to_call}?uuid=${uuid}&deploy_token=${deploy_token}")
+response=$(curl "${url_to_call}?uuid=${uuid}&deploy_token=${deploy_token}&licence=${licence}")
 
 status=$(echo ${response} | jq -r .status)
 
@@ -31,7 +32,6 @@ if [ $status = "success" ]; then
     rm -r "${BUILD_DIR}/app"
 else
     error_description=$(echo ${response} | jq -r .error_description)
-    RED='\033[0;31m'
-    echo "status : ${RED}${status}, error message : ${error_description}"
+    echo "status : ${status}, error message : ${error_description}"
     exit 1
 fi
